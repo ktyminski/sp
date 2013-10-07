@@ -1,9 +1,0 @@
- ## Zadania ze środowiska programisty
- 
--Zaby zmienić hasło należy na terminalu wpisać:
-+Tekst wpiujemy w notacji [Markdown](http://daringfireball.net/projects/markdown/basics).
-+
-+Aby zmienić hasło należy na terminalu wpisać:
- 
- ```sh
- passwd 
