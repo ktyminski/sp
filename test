@@ -1,17 +1,4 @@
-jp
+sp
 ==
-## Zadania ze środowiska programisty
- 
-Zadania ze Srodowiska programisty.
-Zaby zmienić hasło należy na terminalu wpisać:
 
-```sh
-passwd
-```
-
-Prosty program w C:
-
-```c
-main() {
-  printf("hello world");
-}
+Zadania ze środowiska programisty
