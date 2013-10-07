@@ -1,0 +1,6 @@
+```pascal
+program witaj;
+begin
+writeln ("witam");
+readln;
+end.
