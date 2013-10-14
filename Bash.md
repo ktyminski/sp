@@ -19,3 +19,9 @@ cat >rachunki.txt
 ^C
 
 ```
+4\. Będąc w katalogu wazne-sprawy skopiuj plik rachunki.txt do katalogu zrealizowane.
+```
+
+
+
+```
