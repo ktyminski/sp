@@ -6,7 +6,7 @@
 mkdir ...
 ```
 
-2\. Używając linii poleceń stwórz strukturę katalogów:
+2\. Przejdź do katalogu dom i utwórz katalog wazne-sprawy.
 ```sh
 cd ...
 ```
