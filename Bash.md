@@ -21,7 +21,18 @@ cat >rachunki.txt
 ```
 4\. Będąc w katalogu wazne-sprawy skopiuj plik rachunki.txt do katalogu zrealizowane.
 ```
-
-
+cd temp/dom/wazne-sprawy
+mv rachunki.txt ./temp/praca/zlecenia/zrealizowane
 
 ```
+5\. Przejdź do katalogu zrealizowane i zmień nazwę pliku rachunki.txt na wykonano.txt.
+```
+cd temp/praca/zlecenia/zrealizowane
+mv ./rachunki.txt wykonano.txt
+```
+6\. Utwórz plik wykonano.txt wielkości 11 bajtów, następnie podziel go pliki wielkości 5 bajtów. W ten sposób otrzymasz 3 pliki. (split)
+```
+cd temp
+
+
+
