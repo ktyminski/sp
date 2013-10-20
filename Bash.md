@@ -53,7 +53,7 @@ cp odtworzono.txt ~/temp/dom/wazne-sprawy
 9\. Będąc w katalogu wazne-sprawy sprawdź, czy są jakieś różnice w zawartości plików wykonano.txt i odtworzono.txt.
 ```
 cd temp/dom/wazne-sprawy
-diff wykonano.txt odtworzono.txt
+diff odtworzono.txt ~/temp/praca/zlecenia/zrealizowane/wykonano.txt
 ```
 10\. Wyświetl kalendarz na październik 2009 r. (cal)
 ```
@@ -74,6 +74,7 @@ cal 11 2009 -3
 
 11\. Jaki był dzień tygodnia 25 maja 1975 r. (cal i date)
 ```
+date -d 1975-05-25 +%a
 
 ```
 
