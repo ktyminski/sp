@@ -40,7 +40,7 @@ split -b 5 wykonano.txt
 ```
 7\. Będąc w katalogu logo skopiuj powyżej otrzymane 3 pliki do katalogu dokumenty.
 ```
-cd ~/temp/nauka/logo
+cd temp/nauka/logo
 cp ~/temp/praca/zlecenia/zrealizowane/xa* ~/temp/praca/dokumenty
 ```
 8\. Będąc w katalogu dokumenty połącz skopiowane 3 pliki w plik odtworzono.txt, tak aby otrzymać plik o zawartości identycznej z wykonano.txt.
@@ -50,8 +50,32 @@ cd temp/praca/dokumenty
 cat xaa xab xac >odtworzono.txt
 cp odtworzono.txt ~/temp/dom/wazne-sprawy
 ```
+9\. Będąc w katalogu wazne-sprawy sprawdź, czy są jakieś różnice w zawartości plików wykonano.txt i odtworzono.txt.
+```
+cd temp/dom/wazne-sprawy
+diff wykonano.txt odtworzono.txt
+```
+10\. Wyświetl kalendarz na październik 2009 r. (cal)
+```
+cal 10 2009
+
+```
+ - Wyświetl kalendarz na wrzesień, październik i listopad 2009 r. z miesiącami obok siebie (cal):
+ - Wyświetl kalendarz na październik, listopad i grudzień 2009 r. w taki sposób:
+ - I jeszcze raz na wrzesień i październik oraz na październik i listopad 2009 r z miesiącami obok siebie (cal, cut?):
+
+```
+cal 10 2009 -3
+
+cal 11 2009 -3
 
 
+```
+
+11\. Jaki był dzień tygodnia 25 maja 1975 r. (cal i date)
+```
+
+```
 
 
 
