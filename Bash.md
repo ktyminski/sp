@@ -48,7 +48,7 @@ cp ~/temp/praca/zlecenia/zrealizowane/xa* ~/temp/praca/dokumenty
 ```
 cd temp/praca/dokumenty
 cat xaa xab xac >odtworzono.txt
-cp odtworzono.txt ~/temp/dom/wazne-sprawy
+cp odtworzono.txt ../../dom/wazne-sprawy
 ```
 9\. Będąc w katalogu wazne-sprawy sprawdź, czy są jakieś różnice w zawartości plików wykonano.txt i odtworzono.txt.
 ```
