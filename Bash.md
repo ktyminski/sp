@@ -53,7 +53,7 @@ cp odtworzono.txt ../../dom/wazne-sprawy
 9\. Będąc w katalogu wazne-sprawy sprawdź, czy są jakieś różnice w zawartości plików wykonano.txt i odtworzono.txt.
 ```
 cd temp/dom/wazne-sprawy
-diff odtworzono.txt ~/temp/praca/zlecenia/zrealizowane/wykonano.txt
+diff odtworzono.txt -s ../../praca/zlecenia/zrealizowane/wykonano.txt
 ```
 10\. Wyświetl kalendarz na październik 2009 r. (cal)
 ```
