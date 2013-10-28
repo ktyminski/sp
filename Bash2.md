@@ -43,7 +43,11 @@ tar -xzf temp.tar.gz
 ```
 rm temp* -r
 ```
-10\. Wyswietl linijki ze srodka programu (liczac od gory). Przyklad : pokaz linijki 3 i 4.
+10\. Wyswietl linijki ze srodka pliku program.c (liczac od gory). Przyklad : pokaz linijki 3 i 4.
 ```
 head -n4 program.c | tail -n2
+```
+11\.Wyswietl linijki ze srodka pliku program.c (liczac od gory). Przyklad : pokaz linijki 4 i 5 od konca.
+```
+tail -n5 program.c | head -n4
 ```
