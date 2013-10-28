@@ -43,3 +43,7 @@ tar -xzf temp.tar.gz
 ```
 rm temp* -r
 ```
+10\. Wyswietl linijki ze srodka programu.
+```
+head -n4 program.c | tail -n+2
+```
