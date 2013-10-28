@@ -49,5 +49,5 @@ head -n4 program.c | tail -n2
 ```
 11\.Wyswietl linijki ze srodka pliku program.c (liczac od gory). Przyklad : pokaz linijki 4 i 5 od konca.
 ```
-tail -n5 program.c | head -n4
+tail -n5 program.c | head -n2
 ```
