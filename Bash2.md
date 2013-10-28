@@ -51,3 +51,13 @@ head -n4 program.c | tail -n2
 ```
 tail -n5 program.c | head -n2
 ```
+12\.Rozwiazac metoda tac to zadanie (2 od konca)
+```
+tac program.c | head -n3 | head -n2
+
+```
+13\. Inne niz wyraz w grep
+```
+grep -v main program.c
+
+```
