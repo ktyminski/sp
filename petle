@@ -25,3 +25,34 @@ int main()
   printf ("koniec programu");
 	return 0;
 }
+
+
+ZADANIE 2 :
+
+#include <stdio.h>
+
+int main()
+{
+	int a,i;
+	int tab[1000];
+
+	printf ("podaj liczbe naturalna");
+	scanf ("%i", &a);
+	
+	i=0;
+	   while (a>0) 
+	   {  
+		   tab[i]=a%8;
+		   a=a/8; 
+		   i=i+1;
+		}
+		
+		for (i=i-1;i>=0;i=i-1)
+	 {
+		 printf("%i ", tab[i]);
+	    
+	 } 
+	
+	return 0;
+}
+
