@@ -18,6 +18,6 @@ head -n5 (sciezka) -q
 ```
 4\.Wyświetl linie o numerach 3, 4 i 5 z pliku /etc/passwd.
 ```
-head etc/passwd
+head -n5 /etc/passwd | tail -n3
 
 ```
