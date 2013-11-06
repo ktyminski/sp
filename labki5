@@ -1,0 +1,40 @@
+#include <stdio.h>
+
+int main()
+{
+	int i,n,dod,ujem,zer;
+	double a;
+	dod=0;
+	ujem=0;
+	zer=0;
+	printf("podaj wielkosc tablicy");
+	scanf ("%i", &n);
+	int tab[n];
+    
+    
+ for (i=0;i<n;i++)
+	{
+	printf ("podaj liczbe do tablicy");
+	scanf ("%lf", &a);
+	tab[i]=a;
+	}
+	
+		
+		for (i=0;i<n;i++)
+	 {
+		 if (tab[i]>0) dod=dod+1;
+		  else if (tab[i]<0) ujem=ujem+1;
+		    else zer=zer+1;
+		 
+		
+	    
+	 } 
+	 printf ("dodatnie");
+	 printf("%i ", dod);
+	 printf ("ujemne");
+	 printf("%i ", ujem);
+	 printf ("liczb zero");
+	 printf("%i ", zer);
+	
+	return 0;
+}
