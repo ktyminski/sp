@@ -85,3 +85,57 @@ printf ("\n");
 	
 	return 0;
 }
+
+
+// ZAD 3
+
+
+#include <stdio.h>
+
+
+int main()
+{
+	int i,n,wynik;
+	double a,porownanie;
+	printf("podaj wielkosci tablic ");
+	scanf ("%i", &n);
+	int tab1[n];
+	int tab2[n];
+	
+	 for (i=0;i<n;i++)
+	 {
+	 printf ("podaj liczbe do tablicy pierwszej ");
+	 scanf ("%lf", &a);
+	 tab1[i]=a;
+	 }
+	
+	
+	 for (i=0;i<n;i++)
+	 {
+	 printf ("podaj liczbe do tablicy drugiej ");
+	 scanf ("%lf", &a);
+	 tab2[i]=a;
+	 }
+wynik =0;	
+	for (i=n-1;i>0;i=i-1)
+	{
+	 porownanie=tab1[i]-tab2[i];
+	 printf ("\n");
+	  if (tab1[i]<tab2[i]) 
+	  {
+		  wynik =1;
+		  i=0;	  
+		}
+	  if (tab1[i]>tab2[i])
+	  {
+		  wynik =2;
+		  i=0;
+	  }	  		
+	}	
+	printf ("poprzedzajaca tablica jest tablica ");
+   	printf ("%i", wynik);
+   	printf ("\n");
+	return 0;
+}
+
+
