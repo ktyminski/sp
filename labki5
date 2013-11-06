@@ -38,3 +38,50 @@ int main()
 	
 	return 0;
 }
+
+
+// ZAD 2
+
+#include <stdio.h>
+
+int main()
+{
+	int i,n;
+	double a,suma,iloczyn;
+	printf("podaj wielkosci tablic ");
+	scanf ("%i", &n);
+	int tab1[n];
+	int tab2[n];
+	
+	 for (i=0;i<n;i++)
+	 {
+	 printf ("podaj liczbe do tablicy pierwszej ");
+	 scanf ("%lf", &a);
+	 tab1[i]=a;
+	 }
+	
+	
+	 for (i=0;i<n;i++)
+	 {
+	 printf ("podaj liczbe do tablicy drugiej ");
+	 scanf ("%lf", &a);
+	 tab2[i]=a;
+	 }
+suma=0;	
+	 for (i=0;i<n;i++)
+	 {
+		 
+		 iloczyn=tab1[i]*tab2[i];
+		 suma=suma+iloczyn;
+		 
+		 
+		} 
+	
+	
+printf ("%lf ", suma);
+printf ("\n");
+	
+	
+	
+	return 0;
+}
