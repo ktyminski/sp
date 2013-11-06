@@ -1,3 +1,4 @@
+// ZAD 1      // KAROL TYMINSKI@ALL RIGHTS RESERVED
 #include <stdio.h>
 
 int main()
@@ -96,7 +97,7 @@ printf ("\n");
 int main()
 {
 	int i,n,wynik;
-	double a,porownanie;
+	double a;
 	printf("podaj wielkosci tablic ");
 	scanf ("%i", &n);
 	int tab1[n];
@@ -117,9 +118,9 @@ int main()
 	 tab2[i]=a;
 	 }
 wynik =0;	
-	for (i=n;i>0;i=i-1)
+	for (i=n-1;i>0;i=i-1)
 	{
-	 porownanie=tab1[i]-tab2[i];
+	 //porownanie=tab1[i]-tab2[i];
 	 printf ("\n");
 	  if (tab1[i]<tab2[i]) 
 	  {
@@ -132,10 +133,10 @@ wynik =0;
 		  i=0;
 	  }	  		
 	}	
-	printf ("poprzedzajaca tablica jest tablica ");
-   	printf ("%i", wynik);
-   	printf ("\n");
+			printf ("jesli wynik jest 0 to TABLICE SA ROWNE\n");
+		    printf ("poprzedzajaca tablica jest tablica ");
+			printf ("%i", wynik);
+			printf ("\n");
+			
 	return 0;
 }
-
-
