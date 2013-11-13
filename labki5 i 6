@@ -140,3 +140,67 @@ wynik =0;
 			
 	return 0;
 }
+
+
+
+LABKI 6 // ZAD 1 - NIE DAJE DOBREGO WYNIKU
+#include <stdio.h>
+
+int main()
+{
+	int i,n1,n2,n3,cyfra,p;
+	printf ("podaj wielkosci tablic 1 i 2 ");
+	scanf("%i", &n1); 
+	scanf("%i", &n2); 
+	int tab1[n1],tab2[n2];
+	
+	if (n1>=n2) n3=n1+1;
+	   else n3=n2+1;
+	   
+	  // printf("%i ",n3);
+	
+	int tab3[n3];  // wczytywanie liczb
+	
+		for(i=0;i<n1;i++)
+		{
+		  printf ("podawaj liczbe do pierwszej tablicy ");
+		  scanf("%i1",&cyfra);	
+		  tab1[i]=cyfra;
+			
+		}	
+		
+		for(i=0;i<n2;i++)
+		{
+		  printf ("podawaj liczbe do drugiej tablicy ");
+		  scanf("%i1",&cyfra);	
+		  tab2[i]=cyfra;
+			
+		}
+		
+		p=0;
+		i=n2-1;
+		
+		while (i>0)  // petla liczaca
+	    {
+		 tab3[i]=tab1[i]+tab2[i]+p;
+		   if (tab1[i]+tab2[i]>=10)
+		      {
+				 tab3[i]=tab3[i]-10;
+				 p=1; 
+				  
+				}    
+
+		i=i-1;		 
+	}	 
+
+     for (i=0;i<n3;i=i+1)  //petla wypisujaca
+     {
+		 printf ("%i ", tab3[i]);	
+	
+	}
+	
+	
+	
+	return 0;
+}
+
