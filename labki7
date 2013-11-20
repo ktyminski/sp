@@ -1,6 +1,6 @@
-#ZADANIE 7.2
-
+ZAD 7.2
 #include <stdio.h>
+#include <stdlib.h>
 
 
 int main()
@@ -19,12 +19,15 @@ int main()
 		 if (a<0) 
 		    {
 		     printf ("mowilem dodatnie !");
+		     exit(0);
 	         }
 		 tab[i]=a; 
 	  }
 	  
 	  m=1;
-	  
+	  if (n=1) printf("0 ");
+	    else
+	    {
 	 for (i=0;i<n;i++)
 	 { 
 		 licznik=tab[i];
@@ -32,19 +35,19 @@ int main()
 		  for (j=m;j<n;j++)
 		  {
 			licznik=licznik+tab[j];  
-			// printf ("%lf", licznik);
-			 //printf  
+			
 			if (licznik == r)
 			{
 				printf("%i ", i);
 				printf(" - ");
 				printf("%i ", j);
+				printf("\n");
 				
 				
 			}	  
 			m=m+1;
 		  }
-		 
+		}
 }	 
 	  
 	    
