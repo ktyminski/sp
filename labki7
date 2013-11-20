@@ -1,0 +1,54 @@
+#ZADANIE 7.2
+
+#include <stdio.h>
+
+
+int main()
+{
+	double r,a,licznik;
+	int n,i,j,m;
+	printf("podaj liczbe rzeczywista R");
+	scanf ("%lf", &r);
+	printf ("podaj ilosc elementow do tablicy");
+	scanf ("%i", &n);
+	double tab[n];
+	  for (i=0;i<n;i++)
+	  {
+		 printf ("podawaj liczby do tablicy - dodatnie");
+		 scanf ("%lf", &a);
+		 if (a<0) 
+		    {
+		     printf ("mowilem dodatnie !");
+	         }
+		 tab[i]=a; 
+	  }
+	  
+	  m=1;
+	  
+	 for (i=0;i<n;i++)
+	 { 
+		 licznik=tab[i];
+		 
+		  for (j=m;j<n;j++)
+		  {
+			licznik=licznik+tab[j];  
+			// printf ("%lf", licznik);
+			 //printf  
+			if (licznik == r)
+			{
+				printf("%i ", i);
+				printf(" - ");
+				printf("%i ", j);
+				
+				
+			}	  
+			m=m+1;
+		  }
+		 
+}	 
+	  
+	    
+	
+	
+	return 0;
+}
