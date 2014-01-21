@@ -10,10 +10,10 @@ int qq(int n, int k)
   }
     else 
     { 
-    for (i=0; i<k; i++) 
-    { 
-    x=x+(i*i); 
-    } 
+      for (i=0; i<k; i++) 
+      { 
+      x=x+(i*i); 
+      } 
     return qq(n-1, k)+x; 
     } 
     
