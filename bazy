@@ -102,8 +102,15 @@ UPDATE pracownik SET pensja=pensja+(pensja*0.2) Where data_zatr NOT BETWEEN '10-
 --ilości zamówień leksykograficznie po nazwisku i imieniu. 
 --Uwaga: dwóch pracowników może posiadać to samo imię i nazwisko. 
 
---Rozwiązanie: SELECT nazwisko, imie FROM pracownik p LEFT JOIN zamowienie z ON p.id_pracownik=z.id_pracownik WHERE data_zamowienia IS NULL AND IS NOT NULL ORDER BY data_zamowienia DESC; 
+--Rozwiązanie: SELECT p.nazwisko, p.imie , COUNT(z.id_pracownik) as Ilosc
+FROM pracownik p LEFT JOIN zamowienie z ON p.id_pracownik=z.id_pracownik
+GROUP BY p.nazwisko, p.imie, z.id_pracownik
+ORDER BY ilosc DESC, nazwisko ASC, imie ASC;
 
 --C1-5 [5 pkt] --Znajdź nazwę kategorii (jednej lub kilku), w której znajduje się największa 
 --liczba produktów.
 --Proszę nie używać konstrukcji TOP 1 WITH TIES. 
+
+Select k.nazwa, COUNT(p.id_kategoria)as ilosc from kategoria k JOIN podkategoria p ON k.id_kategoria=p.id_kategoria
+JOIN produkt pr ON p.id_podkategoria=pr.id_podkategoria
+GROUP BY k.nazwa ORDER BY ilosc DESC;
