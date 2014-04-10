@@ -38,7 +38,7 @@
 --12.3 select marka,typ,DATEDIFF(YEAR,data_prod,GETDATE()) as ilosc_lat from samochod order by DATEDIFF(year,data_prod,getdate())desc; 
 --13.1 SELECT imie, nazwisko, LEFT(imie,1)+'. '+LEFT(nazwisko,1)+'.' AS inicjaly FROM klient ORDER BY inicjaly, nazwisko, imie; 
 --13.2 
---13.3 
+--13.3 l
 --14.1 UPDATE pracownik SET dodatek=50 WHERE dodatek IS NULL; 
 --14.2 UPDATE klient set imie='Jerzy', nazwisko='Nowak' where id_klient=10; 
 --14.3 update pracownik set dodatek=100+dodatek where pensja<1500; 
