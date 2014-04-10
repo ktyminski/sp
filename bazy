@@ -24,6 +24,7 @@
 --8.3 select * from samochod where przebieg between 10000 and 20000 or przebieg between 30000 and 40000; 
 --9.1 select * from pracownik where dodatek is null; 
 --9.2 select * from klient where nr_karty_kredyt is not null; 
+--9.3 SELECT imie, nazwisko, COALESCE(dodatek,0) FROM pracownik;
 --10.1 select imie,nazwisko,pensja,dodatek,pensja+coalesce(dodatek,0) as do_zaplaty from pracownik; 
 --10.2 select imie,nazwisko,pensja+coalesce(pensja,50) as nowa_pensja from pracownik; 
 --10.3 select imie,nazwisko,(pensja+coalesce(dodatek,0))/100 as jeden_procent from pracownik order by jeden_procent; 
