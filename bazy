@@ -48,7 +48,8 @@
 --16.1 INSERT INTO klient (id_klient,imie,nazwisko,ulica,numer,kod,miasto,telefon) VALUES(121,'Adam','Cichy','Korzenna','12','00-950','Warszawa','123-454-321'); 
 --16.2 insert into samochod (id_samochod,kolor,marka,typ,poj_silnika,data_prod,przebieg) values (50,'SREBRNY','SKODA','OCTAVIA',1896,'2012-09-01',5000); 
 --16.3 insert into pracownik (id_pracownik,imie,nazwisko,data_zatr,dzial,stanowisko,pensja,dodatek,telefon,id_miejsce) values (0,'ALOJZY','MIKOS','2010-08-11','ZAOPATRZENIE','MAGAZYNIER',3000,50,'501-501-501',1); 
---17.1 SELECT s.id_samochod, s.marka, s.typ, w.data_wyp, w.data_odd FROM samochod s INNER JOIN wypozyczenie w ON s.id_samochod=w.id_samochod WHERE w.data_odd IS NULL; --17.2 select k.imie, k.nazwisko,w.data_wyp, w.id_wypozyczenie from klient k inner join wypozyczenie w ON k.id_klient=w.id_klient where w.data_odd is null order by k.nazwisko,k.imie; 
+--17.1 SELECT s.id_samochod, s.marka, s.typ, w.data_wyp, w.data_odd FROM samochod s INNER JOIN wypozyczenie w ON s.id_samochod=w.id_samochod WHERE w.data_odd IS NULL; 
+--17.2 select k.imie, k.nazwisko,w.data_wyp, w.id_wypozyczenie from klient k inner join wypozyczenie w ON k.id_klient=w.id_klient where w.data_odd is null order by k.nazwisko,k.imie; 
 --17.3 select w.kaucja, k.imie, k.nazwisko , w.data_wyp from klient k inner join wypozyczenie w ON k.id_klient=w.id_klient where w.kaucja is not null ; 
 --18.1 SELECT k.imie, k.nazwisko, w.data_wyp, s.marka, s.typ FROM klient k INNER JOIN wypozyczenie w ON k.id_klient=w.id_klient INNER JOIN samochod s ON w.id_samochod=s.id_samochod ORDER BY k.nazwisko, k.imie, s.marka, s.typ; 
 --18.2 select m.ulica, m.numer, s.marka, s.typ from miejsce m inner join wypozyczenie w on m.id_miejsce=w.id_miejsca_wyp inner join samochod s on w.id_samochod=s.id_samochod order by m.ulica, m.numer, s.marka, s.typ asc; 
