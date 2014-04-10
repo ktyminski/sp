@@ -1,428 +1,79 @@
-Wyświetlić zawartość wszystkich kolumn z tabeli pracownik.
-
---1.1
-SELECT* FROM pracownik
-
-Z tabeli pracownik wyświetlić same imiona pracowników. 
-
---1.2
-SELECT imie FROM pracownik
-
-Wyświetlić zawartość kolumn imię, nazwisko i dział z tabeli pracownik.
-
---1.3
-SELECT imie,nazwisko,dzial FROM pracownik
-
-Wyświetlić zawartość kolumn imię, nazwisko i 
-pensja z tabeli pracownik. Wynik posortuj malejąco względempensji . 
-
---2.1
-SELECT imie, nazwisko, pensja FROM pracownik ORDER BY pensja DESC; 
-
-
-Wyświetl zawartość kolumn nazwisko i imię z tabeli pracownik.
-Wynik posortuj rosnąco (leksykograficznie) względem nazwiska i imienia. 
-
---2.2
-SELECT imie, nazwisko FROM pracownik ORDER BY imie, nazwisko ASC
-
-Wyświetlić zawartość kolumn nazwisko, dział, stanowisko z tabeli pracownik. 
-Wynik posortuj rosnąco względem działu, a dla tych samych nazw działów malejąco względem stanowiska. 
-
---2.3
-SELECT nazwisko, dzial, stanowisko FROM pracownik ORDER BY dzial ASC, stanowisko DESC
-
-Wyświetlić niepowtarzające się wartości kolumny dział z tabeli pracownik. 
-
---3.1
-select DISTINCT * FROM pracownik
-
-Wyświetlić unikatowe wiersze zawierające wartości kolumn dział i stanowisko w tabeli pracownik. 
-
---3.2
-select DISTINCT dzial, stanowisko FROM pracownik
-
-Wyświetlić unikatowe wiersze zawierające wartości kolumn dział i stanowisko w tabeli pracownik. 
-Wynik posortuj malejąco względem działu i stanowiska. 
-
---3.3
-SELECT DISTINCT dzial, stanowisko FROM pracownik ORDER BY dzial DESC, stanowisko DESC
-
-Znajdź pracowników o imieniu Jan. Wyświetl ich imiona i nazwiska. 
-
---4.1
-SELECT imie, nazwisko FROM pracownik WHERE imie='Jan'
-
-Wyświetlić imiona i nazwiska pracowników pracujących na stanowisku sprzedawca. 
-
---4.2
-SELECT imie, nazwisko FROM pracownik WHERE stanowisko='sprzedawca'
-
-Wyświetlić imiona, nazwiska, pensje pracowników
-, którzy zarabiają powyżej 1500 zł. Wynik posortuj malejąco względem pensji. 
-
---4.3
-SELECT imie, nazwisko, pensja FROM pracownik WHERE pensja>1500 ORDER BY pensja DESC
-
-Z tabeli pracownik wyświetlić imiona, nazwiska,działy, stanowiska tych pracowników, 
-którzy pracują w dziale obsługi klienta na stanowisku sprzedawca. 
-
---5.1
-SELECT imie, nazwisko, dzial, stanowisko FROM pracownik WHERE dzial='obsluga klienta' and stanowisko='sprzedawca'
-
-Znaleźć pracowników pracujących w dziale technicznym na stanowisku kierownika lub sprzedawcy. 
-Wyświetl imię, nazwisko, dział, stanowisko. 
-
---5.2
-SELECT imie, nazwisko, dzial, stanowisko FROM pracownik WHERE dzial='techniczny' AND (stanowisko='kierownik' OR stanowisko='sprzedawca')
-
-Znaleźć samochody, które nie są marek fiat i ford. 
---5.3
-SELECT * FROM samochod WHERE marka!='fiat' and marka!='ford'
-
-Znaleźć samochody marek mercedes, seat i opel. 
-
---6.1 
-SELECT * FROM samochod WHERE marka IN ('Mercedes','Seat','Opel'); 
-
-Znajdź pracowników o imionach Anna, Marzena, Alicja. 
-Wyświetl ich imiona nazwiska i daty zatrudnienia. 
-
---6.2
-select imie, data_zatr from pracownik where imie='anna' or imie='marzena' or imie='alicja'
-
-Znajdź klientów, którzy nie mieszkają w Warszawie lub we Wrocławiu. 
-Wyświetl ich imiona, nazwiska i miasta zamieszkania. 
-
---6.3
-select imie, nazwisko, miasto from klient where miasto!='wroclaw' and miasto!='warszawa'
-
-Wyświetlić imiona i nazwiska klientów, których nazwisko zawiera literę K. 
-
---7.1 
-SELECT imie, nazwisko FROM klient WHERE nazwisko LIKE '%k%'; 
-
-Wyświetlić imiona i nazwiska klientów, dla których nazwisko zaczyna się na D, a kończy się na SKI.
-
---7.2
-select imie, nazwisko from klient where nazwisko LIKE 'D%a%ski'
-
-Znaleźć imiona i nazwiska klientów, których nazwisko zawiera drugą literę O lub A. 
-
---7.3
-SELECT imie,nazwisko from klient where nazwisko Like '_a%' OR nazwisko Like '_o%'
-
-Z tabeli samochód wyświetlić wiersze, dla których pojemność silnika jest z przedziału [1100,1600].
-
---8.1 
-SELECT * FROM samochod WHERE poj_silnika BETWEEN 1100 AND 1600; 
-
-Znaleźć pracowników, którzy zostali zatrudnieni pomiędzy datami 1997-01-01 a 1997-12-31. 
-
---8.2
-SELECT * FROM pracownik WHERE data_zatr BETWEEN '01-01-1997' AND '31-12-1997';
-
-Znaleźć samochody, dla których przebieg jest pomiędzy 10000 a 20000 km lub pomiędzy 30000 a 40000 km. 
-
---8.3
-SELECT * FROM samochod WHERE przebieg BETWEEN 10000 AND 20000 OR przebieg BETWEEN 30000 AND 40000;
-
-Znaleźć pracowników, którzy nie mają określonego dodatku do pensji. 
-
---9.1 
-SELECT * FROM pracownik WHERE dodatek IS NULL;
-
-Wyświetlić klientów, którzy posiadają kartę kredytową. 
-
---9.2
-SELECT * FROM klient WHERE nr_karty_kredyt IS NOT NULL;
-
-Dla każdego pracownika wyświetl imię, nazwisko i wysokość dodatku. Wartość NULL z kolumny dodatek powinna
-być wyświetlona jako 0. Wskazówka: Użyj funkcji COALESCE. 
-
---9.3
-SELECT imie, nazwisko, COALESCE(dodatek,0) FROM pracownik;
-
-Wyświetlić imiona, nazwiska pracowników ich pensje i dodatki oraz kolumnę wyliczeniową do_zapłaty,
-zawierającą sumę pensji i dodatku. Wskazówka: Wartość NULL z kolumny dodatek powinna być liczona jako zero. 
-
---10.1 
-SELECT imie, nazwisko, pensja, dodatek, pensja+COALESCE(dodatek,0) AS do_zaplaty FROM pracownik; 
-
-Dla każdego pracownika wyświetl imię, nazwiskoi wyliczeniową kolumnę nowa_pensja, która będzie miała o
-50% większą wartość niż dotychczasowa pensja. 
-
---10.2
-SELECT imie, nazwisko, 1.5*pensja AS nowa_pensja FROM pracownik;
-
-Dla każdego pracownika oblicz ile wynosi 1% zarobków (pensja + dodatek). Wyświetl imię, nazwiskoi obliczony 1%. 
-Wyniki posortuj rosnąco względem obliczonego 1%
-. 
---10.3
-SELECT imie, nazwisko,0.01*(pensja+COALESCE(dodatek,0)) AS jeden_procent FROM pracownik ORDER BY jeden_procent ASC;
-
-Znajdź imię i nazwisko pracownika, który jako pierwszy został zatrudniony w wypożyczalni samochodów.
-(Jest tylko jeden taki pracownik.)
-
---11.1 
-SELECT TOP 1 imie, nazwisko FROM pracownik ORDER BY data_zatr ASC; 
-
-Wyświetl pierwszych pięciu pracowników z alfabetycznej listy (nazwiska i imiona) wszystkich pracowników.
-(W tym zadaniu nie musisz się przejmować powtórkami imion i nazwisk, ale gdybyś chciał to sprawdź konstrukcję
-SELECT TOP x WITH TIES ...) 
-
---11.2
-SELECT k.imie, k.nazwisko, w.id_samochod, w.data_wyp FROM klient k INNER JOIN wypozyczenie w ON k.id_klient=w.id_klient WHERE w.data_odd IS NULL ORDER BY k.nazwisko, k.imie;
-
-Wyszukaj informację o ostatnim wypożyczeniu samochodu.
-
---11.3
-SELECT k.imie, k.nazwisko, w.data_wyp, w.kaucja FROM klient k INNER JOIN wypozyczenie w ON k.id_klient=w.id_klient WHERE w.kaucja IS NOT NULL;
-
-Wyszukaj pracowników zatrudnionych w miesiącu maju. 
-Wyświetl ich imiona, nazwiska i datę zatrudnienia.
-Wynik posortuj rosnąco względem nazwiska i imienia.
-
---12.1
- SELECT imie, nazwisko, data_zatr
-FROM pracownik
-WHERE MONTH(data_zatr)=5
-ORDER BY nazwisko ASC, imie ASC; 
-
-Dla każdego pracownika (imię i nazwisko) oblicz ile już pracuje dni. 
-Wynik posortuj malejąco według ilości przepracowanych dni. 
-
---12.2
-SELECT m.ulica, m.numer, s.marka, s.typ FROM miejsce m INNER JOIN wypozyczenie w ON m.id_miejsce=w.id_miejsca_wyp INNER JOIN samochod s ON w.id_samochod=s.id_samochod ORDER BY m.ulica, m.numer, s.marka, s.typ;
-
-Dla każdego samochodu (marka, typ) oblicz ile lat upłynęło od jego produkcji. 
-Wynik posortuj malejąco po ilości lat.
-
---12.3
-SELECT s.id_samochod, s.marka, s.typ, k.imie, k.nazwisko FROM samochod s INNER JOIN wypozyczenie w ON s.id_samochod=w.id_samochod INNER JOIN klient k ON w.id_klient=k.id_klient ORDER BY s.id_samochod, k.nazwisko, k.imie;
-
-Wyświetl imię, nazwisko i inicjały każdego klienta.
-Wynik posortuj względem inicjałów, nazwiska i imienia klienta. 
-
---13.1
-SELECT imie, nazwisko, LEFT(imie,1)+'. '+LEFT(
-nazwisko,1)+'.' AS inicjaly
-FROM klient ORDER BY inicjaly, nazwisko, imie; 
-
-Wyświetl imiona i nazwiska klientów w taki sposób,
-aby pierwsza litera imienia i nazwiska była wielka, a pozostałe małe. 
-
---13.2
-SELECT TOP 5 nazwisko, imie FROM pracownik ORDER BY nazwisko, imie;
-
-Wyświetl imiona, nazwiska i numery kart kredytowych klientów. 
-Każda z ostatnich sześciu cyfr wyświetlanegonumeru karty kredytowej klienta powinna być zastąpiona znakiem x . 
-
---13.3
-SELECT TOP 1 w.* FROM klient k JOIN wypozyczenie w ON k.id_klient=w.id_klient WHERE k.imie='Michal' AND k.nazwisko='Szykowny' ORDER BY id_wypozyczenie DESC;
-
-Pracownikom, którzy nie mają określonej wysokości dodatku nadaj dodatek w wysokości 50 zł. 
-
---14.1 
-UPDATE pracownik SET dodatek=50 WHERE dodatek
-IS NULL; 
-
-Klientowi o identyfikatorze równym 10 zmień imię i nazwisko na Jerzy Nowak. 
-
---14.2
- UPDATE klient SET imie='JERZY', nazwisko='NOWAK' WHERE id_klient=10; 
-
-Zwiększ o 100 zł dodatek pracownikom, których pensja jest mniejsza niż 1500 zł. 
-
---14.3
- UPDATE pracownik SET dodatek=dodatek+100 WHERE pensja<1500; 
-
-Usunąć klienta o identyfikatorze równym 17.
-
---15.1 
-DELETE FROM klient WHERE id_klient=17;
-
-Usunąć wszystkie informacje o wypożyczeniach dla klienta o identyfikatorze równym 17. 
-
- --15.2 
-DELETE FROM wypozyczenie WHERE id_klient=17; 
-
-Usuń wszystkie samochody o przebiegu większym niż 60000. 
-
---15.3 
-DELETE FROM samochod WHERE przebieg>60000; 
-
-Dodaj do bazy danych klienta o identyfikatorze równym 121
-: Adam Cichy zamieszkały ul. Korzenna 12, 00-950 Warszawa, tel. 123-454-321. 
-
---16.1 
-INSERT INTO klient (id_klient,imie,nazwisko,ulica,numer,kod,miasto,telefon) 
-VALUES(21,'ADAM','CICHY','KORZENNA','12','00-950','WARSZAWA','123-454-321');
-
-Dodaj do bazy danych nowy samochód o identyfikatorze równym 50
-: srebrna skoda octavia o pojemności silnika 1896 cm3
-wyprodukowana 1 września 2012 r. i o przebiegu 5 000 km. 
-
---16.2
-INSERT INTO samochod (id_samochod,marka,typ,data_prod,kolor,poj_silnika,przebieg) 
-VALUES(19,'SKODA','OCTAVIA','2012-09-01','SREBRNY','1896','5000');
-
-Dodaj do bazy danych pracownika: Alojzy Mikos zatrudniony od 11 sierpnia 2010 r. w dziale zaopatrzenie na
-stanowisku magazyniera z pensją 3000 zł i dodatkiem 50 zł, telefon do pracownika: 501-501-501, pracownik pracuje w
-Warszawie na ul. Lewartowskiego 12. 
-
---16.3
-INSERT INTO pracownik (id_pracownik,imie,nazwisko,data_zatr,dzial,stanowisko,pensja,dodatek,id_miejsce,telefon)
-VALUES(12,'ALOJZY','MIKOS','2010-08-11','ZAOPATRZENIE','MAGAZYNIER','3000','50',
-(SELECT id_miejsce FROM miejsce WHERE miasto='WARSZAWA' AND ulica='LEWARTOWSKIEGO' AND numer=12),'501-501-501');
-
-Wyszukaj samochody, który nie zostały zwrócone. (Data oddania samochodu ma mieć wartość NULL.) 
-Wyświetl identyfikator, markę i typ samochodu oraz jego datę wypożyczenia i oddania. 
-
---17.1 
-SELECT s.id_samochod, s.marka, s.typ, w.data_w
-yp, w.data_odd
-FROM samochod s INNER JOIN wypozyczenie w ON s.id_s
-amochod=w.id_samochod
-WHERE w.data_odd IS NULL; 
-
-Wyszukaj klientów, którzy nie zwrócili jeszcze samochodu.
-(Data oddania samochodu ma mieć wartość NULL.)
-Wyświetl imię i nazwisko klienta oraz identyfikator samochodu i datę wypożyczenia nie zwróconego jeszcze samochodu.
-Wynik posortuj rosnąco względem nazwiska i imienia klienta. 
-
---17.2
-SELECT k.imie, k.nazwisko, w.id_samochod, w.data_wyp
-FROM klient k INNER JOIN wypozyczenie w ON k.id_klient=w.id_klient
-WHERE w.data_odd IS NULL order by k.imie, k.nazwisko asc;
-
-Wśród klientów wypożyczalni wyszukaj daty i kwoty wpłaconych przez nich kaucji.
-Wyświetl imię i nazwisko klienta oraz datę wpłacenia kaucji (data wypożyczenia samochodu jest równocześnie datą wpłacenia kaucji)
- i jej wysokość (pomiń kaucje mające wartość NULL). 
-
---17.3
-SELECT k.imie, k.nazwisko, w.data_wyp, w.kaucja
-FROM klient k inner join wypozyczenie w ON k.id_klient=w.id_klient
-WHERE w.kaucja IS NOT NULL;
-
-Dla każdego klienta, który choć raz wypożyczył samochód, wyszukaj jakie i kiedy wypożyczył samochody.
-Wyświetl imię i nazwisko klienta oraz datę wypożyczenia, markę i typ wypożyczonego samochodu. 
-Wynik posortuj rosnąco po nazwisku i imieniu klienta oraz marce i typie samochodu. 
-
---18.1 
-SELECT k.imie, k.nazwisko, w.data_wyp, s.marka, s.typ
-FROM klient k INNER JOIN wypozyczenie w ON k.id_klient=w.id_klient
-INNER JOIN samochod s ON w.id_samochod=s.id_samochod
-ORDER BY k.nazwisko, k.imie, s.marka, s.typ; 
-
-Dla każdej filii wypożyczalni samochodów (tabela miejsce) wyszukaj jakie samochody były wypożyczane.
-Wyświetl adres filii (ulica i numer) oraz markę i typ wypożyczonego samochodu.
-Wyniki posortuj rosnąco względem adresu filii, marki i typu samochodu. 
-
---18.2
-SELECT m.numer, m.ulica, s.marka, s.typ
-FROM miejsce m INNER JOIN wypozyczenie w ON m.id_miejsce=w.id_miejsca_wyp
-INNER JOIN samochod s ON w.id_samochod=s.id_samochod
-ORDER BY m.numer, m.ulica, s.marka, s.typ ;
-
-Dla każdego wypożyczonego samochodu wyszukaj informację jacy klienci go wypożyczali. 
-Wyświetl identyfikator, markę i typ samochodu oraz imię i nazwisko klienta. 
-Wyniki posortuj rosnąco po identyfikatorze samochodu oraz nazwisku i imieniu klienta. 
-
---18.3
-SELECT s.id_samochod, s.marka, s.typ, k.imie, k.nazwisko
-FROM samochod s INNER JOIN wypozyczenie w ON s.id_samochod=w.id_samochod
-INNER JOIN klient k ON w.id_klient=k.id_klient
-ORDER BY s.id_samochod, k.nazwisko , k.imie 
-
-Znaleźć największą pensję pracownika wypożyczalni samochodów. 
-
---19.1
-SELECT MAX(pensja) AS pensja_max FROM pracownik
-
-Znaleźć średnią pensję pracownika wypożyczalni samochodów. 
-
---19.2
-SELECT AVG(pensja) AS Pensja_min FROM pracownik
-
-Znaleźć najwcześniejszą datę wyprodukowania samochodu . 
-
---19.3
-SELECT MIN(data_prod) AS Najwczesniej FROM samochod
-
-Dla każdego klienta wypisz imię, nazwisko i łączną ilość wypożyczeń samochodów
-(nie zapomnij o zerowej liczbiewypożyczeń).
-Wynik posortuj malejąco względem ilości wypożyczeń. 
-
---20.1
- SELECT k.imie, k.nazwisko, COUNT(w.id_klient) AS ilosc_wypozyczen 
-FROM klient k LEFT JOIN wypozyczenie w ON k.id_klient=w.id_klient 
-GROUP BY k.imie, k.nazwisko, k.id_klient 
-ORDER BY COUNT(w.id_klient) DESC;
-
-Wyświetl imiona, nazwiska i pensje pracowników, którzy posiadają najwyższą pensją. 
-
---22.1 
-
-SELECT imie, nazwisko, pensja FROM pracownik W
-HERE pensja=(SELECT MAX(pensja) FROM pracownik); 
-
-Wyświetl pracowników (imiona, nazwiska, pensje), którzy zarabiają powyżej średniej pensji. 
-
---22.2
-SELECT imie, nazwisko, pensja FROM pracownik WHERE pensja >(Select AVG(pensja) from pracownik);
-
-Wyszukaj samochody (marka, typ, data produkcji), które zostały wyprodukowane najwcześniej. 
-
---22.3
-SELECT marka, typ, data_prod From samochod where data_prod=(select MIN(data_prod) from samochod);
-
-Wyświetl wszystkie samochody (marka, typ, data produkcji), które do tej pory nie zostały wypożyczone.
- 
---23.1 ???????????????????????????@$@#%@%^@#%!@$!%#!Q#%!@%!#@%!%
-!%!#@%!#%!Q%!%!%!#@%!#%!Q%!%!%!#@%!#%!Q%!%!%!#@%!#%!Q%!%!%!#@%!#%!Q%!%
-
-
-Wyświetl klientów (imię i nazwisko), którzy do
-tej pory nie wypożyczyli żadnego samochodu. Wynik
-posortuj rosnąco względem nazwiska i imienia klienta. 
-
---23.2
-SELECT imie,nazwisko FROM klient WHERE id_klient NOT IN (SELECT DISTINCT id_klient FROM wypozyczenie);
-Znaleźć pracowników (imię i nazwisko), którzy
-do tej pory nie wypożyczyli żadnego samochodu klientowi.
- 
---23.3
-SELECT imie, nazwisko FROM pracownik
-WHERE id_pracownik NOT IN(SELECT DISTINCT id_pracow_wyp FROM wypozyczenie);
-
---24.1 ????????????????????????????????????????????????????????????????????????
-
-Znajdź samochód/samochody (id_samochod, marka,typ), który był najczęściej wypożyczany. Wynik posortuj
-rosnąco (leksykograficznie) względem marki i typu. 
-
---24.2
-SELECT k.id_klient,k.imie,k.nazwisko
-FROM klient k JOIN wypozyczenie w ON k.id_klient=w.id_klient
-GROUP BY k.id_klient,k.imie,k.nazwisko
-HAVING COUNT(k.id_klient)= ( SELECT TOP 1 COUNT(w.id_klient) AS ilosc FROM wypozyczenie w
-GROUP BY w.id_klient
-ORDER BY COUNT(w.id_klient) )
-ORDER BY k.nazwisko,k.imie
-
-Znajdź pracownika/pracowników (id_pracownik, nazwisko, imie), którzy wypożyczył najwięcej samochodów
-klientom. Wynik posortuj rosnąco (leksykograficznie) względem nazwiska i imienia pracownika.
- 
---24.3
-SELECT p.id_pracownik, p.imie, p.nazwisko
-FROM pracownik p JOIN wypozyczenie w ON p.id_pracownik=w.id_pracow_wyp
-GROUP BY p.id_pracownik,p.imie,p.nazwisko
-HAVING COUNT(p.id_pracownik)= ( SELECT TOP 1 COUNT(w.id_pracow_wyp) AS ilosc
-FROM wypozyczenie w
-GROUP BY w.id_pracow_wyp
-ORDER BY ilosc DESC)
-ORDER BY p.nazwisko,p.imie
-
-////////////////////////////////////////
---25.2 - --27.3 ???////////////////////
-///////////////////////////////////////
+--1.1 
+select * from pracownik; 
+--1.2 select imie from pracownik; 
+--1.3 select imie,nazwisko,dzial from pracownik; 
+--2.1 select imie,nazwisko,pensja from pracownik order by pensja desc; 
+--2.2 select imie,nazwisko,pensja from pracownik order by nazwisko,imie; 
+--2.3 select nazwisko,dzial,stanowisko from pracownik order by dzial asc imie desc; 
+--3.1 select distinct dzial from pracownik; 
+--3.2 select distinct dzial,stanowisko from pracownik; 
+--3.3 select distinct dzial,stanowisko from pracownik order by dzial,stanowisko desc; 
+--4.1 select imie,nazwisko from pracownik where imie='jan'; 
+--4.2 select imie,nazwisko from pracownik where stanowisko='sprzedawca'; 
+--4.3 select imie,nazwisko,pensja from pracownik where pensja>1500 order by pensja desc; 
+--5.1 select imie,nazwisko,dzial,stanowisko from pracownik where dzial='obsluga klienta' and stanowisko='sprzedawca'; 
+--5.2 select imie,nazwisko,dzial,stanowisko from pracownik where dzial='techniczny' and stanowisko='kierownik' or stanowisko='sprzedawca'; 
+--5.3 select marka from samochod where marka!='fiat' and marka!='ford'; 
+--6.1 select * from samochod where marka in('mercedes','seat','opel'); 
+--6.2 select imie,nazwisko,data_zatr from pracownik where imie in('anna','marzena','alicja'); 
+--6.3 select imie,nazwisko,miasto from klient where miasto not in('warszawa','wroclaw'); 
+--7.1 select imie,nazwisko from klient where nazwisko like '%k%'; 
+--7.2 select imie,nazwisko from klient where nazwisko like 'D%ski'; 
+--7.3 select imie,nazwisko from klient where nazwisko like '_O%' 
+--8.1 select * from samochod where poj_silnika between 1100 and 1600; 
+--8.2 select * from pracownik where data_zatr between '1997-01-01' and '1997-31-12'; 
+--8.3 select * from samochod where przebieg between 10000 and 20000 or przebieg between 30000 and 40000; 
+--9.1 select * from pracownik where dodatek is null; 
+--9.2 select * from klient where nr_karty_kredyt is not null; 
+--10.1 select imie,nazwisko,pensja,dodatek,pensja+coalesce(dodatek,0) as do_zaplaty from pracownik; 
+--10.2 select imie,nazwisko,pensja+coalesce(pensja,50) as nowa_pensja from pracownik; 
+--10.3 select imie,nazwisko,(pensja+coalesce(dodatek,0))/100 as jeden_procent from pracownik order by jeden_procent; 
+--11.1 select top 1 k.imie,k.nazwisko from klient k JOIN wypozyczenie w ON k.id_klient=w.id_klient order by w.data_wyp ASC; 
+--11.2 select top 5 k.imie,k.nazwisko from pracownik k order by k.nazwisko,k.imie; 
+--11.3 select top 1 * from wypozyczenie w order by w.data_wyp desc; 
+--12.1 select imie,nazwisko,data_zatr from pracownik where MONTH(data_zatr)=5 order by nazwisko asc,imie asc; 
+--12.2 select imie,nazwisko,DATEDIFF(DAY,data_zatr,GETDATE()) as ilosc_dni from pracownik order by DATEDIFF(DAY,data_zatr,GETDATE()) desc; 
+--12.3 select marka,typ,DATEDIFF(YEAR,data_prod,GETDATE()) as ilosc_lat from samochod order by DATEDIFF(year,data_prod,getdate())desc; 
+--13.1 SELECT imie, nazwisko, LEFT(imie,1)+'. '+LEFT(nazwisko,1)+'.' AS inicjaly FROM klient ORDER BY inicjaly, nazwisko, imie; 
+--13.2 
+--13.3 
+--14.1 UPDATE pracownik SET dodatek=50 WHERE dodatek IS NULL; 
+--14.2 UPDATE klient set imie='Jerzy', nazwisko='Nowak' where id_klient=10; 
+--14.3 update pracownik set dodatek=100+dodatek where pensja<1500; 
+--15.1 DELETE FROM klient WHERE id_klient=17; 
+--15.2 DELETE from wypozyczenie where id_klient=17; 
+--15.3 delete from samochod where przebieg>60000; 
+--16.1 INSERT INTO klient (id_klient,imie,nazwisko,ulica,numer,kod,miasto,telefon) VALUES(121,'Adam','Cichy','Korzenna','12','00-950','Warszawa','123-454-321'); 
+--16.2 insert into samochod (id_samochod,kolor,marka,typ,poj_silnika,data_prod,przebieg) values (50,'SREBRNY','SKODA','OCTAVIA',1896,'2012-09-01',5000); 
+--16.3 insert into pracownik (id_pracownik,imie,nazwisko,data_zatr,dzial,stanowisko,pensja,dodatek,telefon,id_miejsce) values (0,'ALOJZY','MIKOS','2010-08-11','ZAOPATRZENIE','MAGAZYNIER',3000,50,'501-501-501',1); 
+--17.1 SELECT s.id_samochod, s.marka, s.typ, w.data_wyp, w.data_odd FROM samochod s INNER JOIN wypozyczenie w ON s.id_samochod=w.id_samochod WHERE w.data_odd IS NULL; --17.2 select k.imie, k.nazwisko,w.data_wyp, w.id_wypozyczenie from klient k inner join wypozyczenie w ON k.id_klient=w.id_klient where w.data_odd is null order by k.nazwisko,k.imie; 
+--17.3 select w.kaucja, k.imie, k.nazwisko , w.data_wyp from klient k inner join wypozyczenie w ON k.id_klient=w.id_klient where w.kaucja is not null ; 
+--18.1 SELECT k.imie, k.nazwisko, w.data_wyp, s.marka, s.typ FROM klient k INNER JOIN wypozyczenie w ON k.id_klient=w.id_klient INNER JOIN samochod s ON w.id_samochod=s.id_samochod ORDER BY k.nazwisko, k.imie, s.marka, s.typ; 
+--18.2 select m.ulica, m.numer, s.marka, s.typ from miejsce m inner join wypozyczenie w on m.id_miejsce=w.id_miejsca_wyp inner join samochod s on w.id_samochod=s.id_samochod order by m.ulica, m.numer, s.marka, s.typ asc; 
+--18.3 select k.imie, k.nazwisko, s.marka, s.typ, s.id_samochod from klient k inner join wypozyczenie w on k.id_klient=w.id_klient inner join samochod s on w.id_samochod=s.id_samochod order by s.id_samochod,k.imie,k.nazwisko; 
+--19.1 select max(pensja) from pracownik; 
+--19.2 select avg(pensja) from pracownik; 
+--19.3 select min(data_prod) from samochod; 
+--20.1 SELECT k.imie, k.nazwisko, COUNT(w.id_klient) AS ilosc_wypozyczen FROM klient k LEFT JOIN wypozyczenie w ON k.id_klient=w.id_klient GROUP BY k.imie, k.nazwisko,k.id_klient ORDER BY COUNT(w.id_klient) DESC; 
+--20.2 select s.id_samochod, s.marka, s.typ, count(w.id_wypozyczenie) as ilosc_wypozyczen from samochod s left join wypozyczenie w on w.id_samochod=s.id_samochod group by s.id_samochod, s.marka, s.typ order by count(w.id_wypozyczenie); --20.3 select p.imie, p.nazwisko, COUNT(w.id_pracow_wyp) as ilosc_wypozyczen_samochodow from pracownik p left join wypozyczenie w on p.id_pracownik=w.id_pracow_wyp group by p.imie, p.nazwisko order by count(w.id_pracow_wyp) desc; 
+--21.1 SELECT k.imie, k.nazwisko, COUNT(w.id_klient) AS ilosc_wypozyczen FROM klient k INNER JOIN wypozyczenie w ON k.id_klient=w.id_klient GROUP BY k.imie, k.nazwisko HAVING COUNT(w.id_klient)>=2 ORDER BY nazwisko ASC, imie ASC; 
+--21.2 select s.id_samochod, s.marka, s.typ, COUNT(w.id_samochod) as ilosc_wypozyczen from samochod s inner join wypozyczenie w on s.id_samochod=w.id_samochod group by s.id_samochod, s.marka, s.typ having count(w.id_samochod)=2 order by s.marka, s.typ; 
+--21.3 select p.imie, p.nazwisko, COUNT(w.id_pracow_wyp) as ilosc_wypozyczen_samochodow from pracownik p left join wypozyczenie w on p.id_pracownik=w.id_pracow_wyp group by p.imie, p.nazwisko having count(w.id_pracow_wyp)<=1 order by count(w.id_pracow_wyp), p.nazwisko, p.imie; 
+--22.1 SELECT imie, nazwisko, pensja FROM pracownik WHERE pensja=(SELECT MAX(pensja) FROM pracownik); 
+--22.2 select imie, nazwisko, pensja from pracownik where pensja>(select AVG(pensja) from pracownik); --22.3 select marka, typ, data_prod from samochod where data_prod=(select MIN(data_prod) from samochod); 
+--23.1 SELECT marka, typ, data_prod FROM samochod WHERE id_samochod NOT IN (SELECT DISTINCT id_samochod FROM wypozyczenie); 
+--23.2 select imie, nazwisko from klient where id_klient not in (select distinct id_klient from wypozyczenie); 
+--23.3 select imie , nazwisko from pracownik where id_pracownik not in (select distinct id_pracow_wyp from wypozyczenie); 
+--24.1 SELECT s.id_samochod, s.marka, s.typ FROM samochod s JOIN wypozyczenie w ON s.id_samochod=w.id_samochod GROUP BY s.id_samochod, s.marka, s.typ HAVING COUNT(w.id_samochod) SELECT TOP 1 COUNT(w.id_samochod) AS ilosc FROM wypozyczenie w GROUP BY w.id_samochod ORDER BY ilosc DESC ) ORDER BY s.marka ASC, s.typ ASC; 
+--24.2 select k.id_klient, k.imie, k.nazwisko from klient k join wypozyczenie w on k.id_klient=w.id_klient group by k.id_klient, k.imie, k.nazwisko having COUNT(w.id_klient)=( select top 1 count(w.id_klient) as ilosc from wypozyczenie w group by w.id_klient order by ilosc ) order by k.nazwisko desc, k.imie desc; 
+--24.3 select p.id_pracownik, p.nazwisko, p.imie from pracownik p join wypozyczenie w on p.id_pracownik=w.id_pracow_wyp group by p.id_pracownik, p.nazwisko, p.imie having COUNT(w.id_pracow_wyp)=( select top 1 COUNT(w.id_pracow_wyp) as ilosc from wypozyczenie w group by w.id_pracow_wyp order by ilosc ) order by p.nazwisko, p.imie; 
+--25.1 UPDATE pracownik SET pensja=1.1*pensja WHERE pensja < (SELECT AVG(pensja) FROM pracownik); 
+--25.2 update pracownik set dodatek=10+dodatek where id_pracownik in (select distinct id_pracow_wyp from wypozyczenie where MONTH(data_wyp)=5);
+--25.3 update pracownik set pensja=0.95*pensja where id_pracownik not in (select distinct id_pracow_wyp from wypozyczenie where YEAR(data_wyp)=1999); 
+--26.1 DELETE FROM klient WHERE id_klient NOT IN (SELECT DISTINCT id_klient FROM wypozyczenie); 
+--26.2 delete from samochod where id_samochod not in (select distinct id_samochod from wypozyczenie); 
+--26.3 delete from pracownik where id_pracownik not in (select distinct id_pracow_wyp from wypozyczenie); 
+--27.1a SELECT imie, nazwisko FROM klient UNION SELECT imie, nazwisko FROM pracownik ORDER BY 2, 1; 
+--27.1b SELECT imie, nazwisko FROM klient UNION ALL SELECT imie, nazwisko FROM pracownik ORDER BY 2, 1; 
+--27.2 select imie, nazwisko from klient intersect select imie, nazwisko from pracownik; 
+--27.3 select imie, nazwisko from klient except select imie, nazwisko from pracownik order by 2, 1
