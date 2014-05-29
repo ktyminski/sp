@@ -1,0 +1,130 @@
+--Kolokwium 3
+--Imię i nazwisko:
+--Data i godzina:
+--Grupa laboratoryjna:
+--Czas: 60 min
+--Liczba punktów do zdobycia: 20 pkt
+--Napisz instrukcje SQL (dla MS SQL Server) realizujące poniższe zadania.
+
+--C1 [7 pkt]
+--1) Utwórz tabelę o nazwie Szpital zawierającą kolumny:
+drop table szpital
+go
+CREATE TABLE szpital (
+  id INTEGER  NOT NULL identity(1,1),
+  nazwa VARCHAR(30) NOT NULL,
+  miasto varchar(30) NOT NULL,
+
+  PRIMARY KEY(id))
+--a) id, jest unikatowym numerem nadawanym automatycznie, jest to klucz główny [0.5 pkt],
+--b) nazwa, jest unikatową nazwą szpitala, niepustą [0.5 pkt],
+--c) miasto, jest nazwą opcjonalną [0.5 pkt]
+
+--2) Utwórz tabelę o nazwie Lekarz zawierającą kolumny:
+CREATE TABLE lekarz(
+  id INTEGER  NOT NULL identity(1,1),
+  imie VARCHAR(15) CHECK(LEN(imie)>=3 and LEN(imie) <=15) NOT NULL,
+  nazwisko VARCHAR(30) CHECK(LEN(nazwisko)>=3 and LEN(nazwisko) <=30) NOT NULL,
+  staz int CHECK(LEN(staz)>=0 and LEN(staz) <=500) NULL,
+   PRIMARY KEY(id)
+   )
+   ----
+  FOREIGN KEY(szpital_id)
+    REFERENCES szpital(id)
+      ON DELETE NO ACTION
+      ON UPDATE NO ACTION
+  )
+--a) id, jest unikatowym numerem nadawanym automatycznie, jest to klucz główny [0.5 pkt],
+--b) imię, jest niepustym łańcuchem znaków zmiennej długości od 3 do 15 znaków [0.5 pkt],
+--c) nazwisko, jest niepustym łańcuchem znaków zmiennej długości od 3 do 30 znaków [0.5 pkt],
+--d) staż, liczbą całkowitą z zakresu (0,500), być może nieokreśloną [1 pkt]
+--f) id_sz, jest to klucz obcy powiązany z kolumną id tabeli Szpital, 
+--   który w przypadku instrukcji UPDATE wprowadza zmiany kaskadowo, a w przypadku 
+--   instrukcji DELETE – wstawia wartość nieokreśloną [2 pkt].
+
+--3) Do każdej z tabel dodaj po 2 rekordy [1 pkt]
+--Rozwiązanie:
+Insert into szpital(nazwa,miasto) 
+Values('nazwa pierwsza','Gdank');
+
+Insert into szpital(nazwa,miasto) 
+Values('nazwa druga','Warszawa');
+
+
+
+Insert into lekarz(imie,nazwisko,staz) 
+Values('Janusz','Mikke',10);
+
+Insert into lekarz(imie,nazwisko,staz) 
+Values('Janusz','Korwin',20);
+--C2 [6 pkt]
+
+--1) Napisz wyzwalacz o nazwie "insert_lekarz", który uniemożliwi dodanie drugiego 
+--   lekarza o takim samym imieniu i nazwisku [2 pkt],
+drop trigger insert_lekarz
+go
+
+create trigger insert_lekarz on lekarz
+for insert 
+as
+ declare @imie varchar(30), @nazwisko varchar(30),
+ @imie2 varchar(30), @nazwisko2 varchar(30)
+ begin
+ select @imie=imie, @nazwisko=nazwisko from inserted  
+ if @imie2=@imie and @nazwisko2=@nazwisko  
+ 
+ rollback
+ raiserror('nie mozna dodac pracownika ',1,2)
+  
+ end
+ go
+--2) Napisz wyzwalacz o nazwie "update_lekarz", który uniemożliwi zmianę imienia 
+--   i nazwiska lekarza na takie, które już występuje w bazie danych [2 pkt].
+--   (Tak, że w bazie nie będzie dwóch lekarzy o tym samym nazwisku i imieniu)
+ 
+ create trigger update_lekarz on lekarz
+for update
+as
+ declare @imie varchar(30), @nazwisko varchar(30),
+ @imie2 varchar(30), @nazwisko2 varchar(30)
+ begin
+ select @imie=imie, @nazwisko=nazwisko from inserted  
+ if @imie2=@imie and @nazwisko2=@nazwisko  
+ 
+ rollback
+ raiserror('nie mozna zmienic imienia lub nazwiska pracownika ',1,2)
+  
+ end
+ go
+
+--3) Napisz instrukcje, które przetestują działanie obu wyzwalaczy, uwzględnij testy, 
+--   które generują duplikat imienia i nazwiska oraz te, które nie generują takiego 
+--   duplikatu (razem 4 testy) [2 pkt]:
+--Rozwiązanie:
+Insert into lekarz(imie,nazwisko,staz) 
+Values('Janusz','Mikke',10);
+
+
+
+Insert into lekarz(imie,nazwisko,staz) 
+Values('Jan','Mik',10);
+select * from lekarz
+
+update lekarz set nazwisko='Mikke' where id=2;
+update lekarz set imie='Ppp' where id=3;
+
+--C3 [6 pkt]
+--1) Napisz procedurę o nazwie "usun_wyzwalacze", która usunie wszystkie wyzwalacze, które
+--  zostały utworzone przez użytkowników w bieżącej bazie danych [4 pkt].
+--  Wskazówka: skorzystaj z dynamicznego SQLa.
+ CREATE PROCEDURE usun_wyzwalacz AS 
+BEGIN 
+
+
+
+--2) Napisz instrukcję uruchamiającą procedurę "usun_wyzwalacze" i udowodnij, że
+--  wcześniej zdefiniowane wyzwalacze zostały usunięte (napisz odpowiedni SELECT) [2 pkt].
+--Rozwiązanie:
+EXEC usun_wyzwalacz; 
+
+
