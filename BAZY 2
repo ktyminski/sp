@@ -1,115 +1,114 @@
 --Kolokwium 3
---Imię i nazwisko: Paweł Cendrowski
---Data i godzina: 28-05-2014
---Grupa laboratoryjna: C
+--Imię i nazwisko: Karol Tymiński		
+--Data i godzina: 30-05-2014 12;30
+--Grupa laboratoryjna: B
 --Czas: 60 min
 --Liczba punktów do zdobycia: 20 pkt
 --Napisz instrukcje SQL (dla MS SQL Server) realizujące poniższe zadania.
 
---C1 [7 pkt]
---1) Utwórz tabelę o nazwie Szpital zawierającą kolumny:
+--B1 [7 pkt]
+--1) Utwórz tabelę o nazwie Autor zawierającą kolumny:
 --a) id, jest unikatowym numerem nadawanym automatycznie, jest to klucz główny [0.5 pkt],
---b) nazwa, jest unikatową nazwą szpitala, niepustą [0.5 pkt],
---c) miasto, jest nazwą opcjonalną [0.5 pkt]
-
-CREATE TABLE Szpital (
-	id_szpital INTEGER IDENTITY(1,1) PRIMARY KEY,
-	nazwa VARCHAR(50) NOT NULL UNIQUE,
-	miasto VARCHAR(20)
-	);
+--b) nazwisko, jest unikatowym nazwiskiem dziennikarza, niepustym [0.5 pkt],
+--c) pseudonim, jest opcjonalny [0.5 pkt]
+CREATE TABLE Autor (
+id_autor INTEGER IDENTITY(1,1) PRIMARY KEY,
+nazwisko VARCHAR(30) NOT NULL UNIQUE,
+pseudonim VARCHAR(20)
+);
 GO
 
---2) Utwórz tabelę o nazwie Lekarz zawierającą kolumny:
+--2) Utwórz tabelę o nazwie Książka zawierającą kolumny:
 --a) id, jest unikatowym numerem nadawanym automatycznie, jest to klucz główny [0.5 pkt],
---b) imię, jest niepustym łańcuchem znaków zmiennej długości od 3 do 15 znaków [0.5 pkt],
---c) nazwisko, jest niepustym łańcuchem znaków zmiennej długości od 3 do 30 znaków [0.5 pkt],
---d) staż, liczbą całkowitą z zakresu (0,500), być może nieokreśloną [1 pkt]
---f) id_sz, jest to klucz obcy powiązany z kolumną id tabeli Szpital, 
+--b) tytuł, jest niepustym łańcuchem znaków zmiennej długości od 3 do 30 znaków [0.5 pkt],
+--c) rok, jest liczbą całkowitą większą od 1900 [0.5 pkt]
+--d) stron, jest liczbą całkowitą z zakresu (0,1200), być może nieokreśloną [1 pkt]
+--f) id_au, jest to klucz obcy powiązany z kolumną id tabeli Autor, 
 --   który w przypadku instrukcji UPDATE wprowadza zmiany kaskadowo, a w przypadku 
 --   instrukcji DELETE – wstawia wartość nieokreśloną [2 pkt].
 
-CREATE TABLE Lekarz (
-	id_lekarz INTEGER IDENTITY(1,1) PRIMARY KEY,
-	imie VARCHAR(15) NOT NULL CHECK(LEN(imie)>3),
-	nazwisko VARCHAR(30) NOT NULL CHECK(LEN(nazwisko)>3),
-	staz INTEGER CHECK(LEN(staz)<500),
-	id_sz INTEGER REFERENCES Szpital(id_szpital)
-	);
+CREATE TABLE ksiazka( 
+id_ksiazka INTEGER PRIMARY KEY IDENTITY(1,1), 
+tytul VARCHAR(30) NOT NULL CHECK(tytul>='3'), 
+rok INTEGER CHECK(rok>'1900'), 
+strony INTEGER CHECK(strony>=0 AND strony<=1200), 
+id_au INTEGER REFERENCES Autor(id_autor) ON UPDATE CASCADE ON DELETE SET NULL );
 GO
+
+
 --3) Do każdej z tabel dodaj po 2 rekordy [1 pkt]
 --Rozwiązanie:
-SET IDENTITY_INSERT [dbo].[Szpital] ON
-INSERT INTO Szpital(id_szpital,nazwa,miasto) VALUES (1,'Szpital Wojewodzki','Gdansk');
-INSERT INTO Szpital(id_szpital,nazwa,miasto) VALUES (2,'Szpital Powiatowy','Iława');
-SET IDENTITY_INSERT [dbo].[Szpital] OFF
-
-SET IDENTITY_INSERT [dbo].[Lekarz] ON
-INSERT INTO Lekarz(id_lekarz,imie,nazwisko,staz,id_sz) VALUES (1,'Bogdan','Chmielnicki',320,1);
-INSERT INTO Lekarz(id_lekarz,imie,nazwisko,staz,id_sz) VALUES (2,'Ryszard','Lewiński',124,2);
-SET IDENTITY_INSERT [dbo].[Lekarz] OFF
---C2 [6 pkt]
---1) Napisz wyzwalacz o nazwie "insert_lekarz", który uniemożliwi dodanie drugiego 
---   lekarza o takim samym imieniu i nazwisku [2 pkt],
---2) Napisz wyzwalacz o nazwie "update_lekarz", który uniemożliwi zmianę imienia 
---   i nazwiska lekarza na takie, które już występuje w bazie danych [2 pkt].
---   (Tak, że w bazie nie będzie dwóch lekarzy o tym samym nazwisku i imieniu)
+SET IDENTITY_INSERT [dbo].[autor] ON
+insert into Autor(id_autor,nazwisko, pseudonim) values(1,'Sapkowski', 'Grim'); 
+insert into Autor(id_autor,nazwisko, pseudonim) values(2,'Gal', 'Anonim');
+SET IDENTITY_INSERT [dbo].[autor] OFF 
+SET IDENTITY_INSERT [dbo].[ksiazka] ON
+insert into ksiazka(id_ksiazka,tytul,rok,strony,id_au) values(1,'Pan Tadeusz','1901', '186',2); 
+insert into ksiazka(id_ksiazka,tytul,rok,strony,id_au) values(2,'Potop','2003', '540',1);
+SET IDENTITY_INSERT [dbo].[ksiazka] OFF
+--B2 [6 pkt]
+--1) Napisz wyzwalacz o nazwie "insert_książka", który uniemożliwi dodanie drugiej 
+--   książki o takim samym tytule i roku wydania [2 pkt],
+--2) Napisz wyzwalacz o nazwie "update_książka", który uniemożliwi zmianę tytułu 
+--   i roku wydania książki na takie, które już występuje w bazie danych [2 pkt].
+--   (Tak, że w bazie nie będzie dwóch książek o tym samym tytule i roku wydania)
+--1///////////////////////////////////////////////////
+CREATE TRIGGER insert_ksiazka ON ksiazka
+AFTER INSERT AS
+ DECLARE @tytul VARCHAR(30)
+ DECLARE @rok INTEGER
+ DECLARE @strony INTEGER
+ SELECT @tytul=tytul, @rok=rok FROM inserted;
+ IF (SELECT COUNT(*) FROM ksiazka WHERE @tytul=tytul AND @rok=rok)>1
+ BEGIN
+ RAISERROR('NIE WOLNO DODAC 2 RAZ TEJ SAMEJ KSIAZKI',1,2)
+ ROLLBACK
+ END 
+--2//////////////////////////////////////////////////// 
+CREATE TRIGGER update_ksiazka ON ksiazka 
+AFTER UPDATE AS
+ DECLARE @tytul VARCHAR(30)
+ DECLARE @rok INTEGER
+ DECLARE @strony INTEGER
+ SELECT @tytul=tytul, @rok=rok FROM inserted;
+ IF (SELECT COUNT(*) FROM ksiazka WHERE @tytul=tytul AND @rok=rok)>1
+ BEGIN
+ RAISERROR('NIE WOLNO DODAC 2 RAZ TEJ SAMEJ KSIAZKI',1,2)
+ ROLLBACK
+ END 
+ 
 --3) Napisz instrukcje, które przetestują działanie obu wyzwalaczy, uwzględnij testy, 
---   które generują duplikat imienia i nazwiska oraz te, które nie generują takiego 
+--   które generują duplikat tytułu i numeru oraz te, które nie generują takiego 
 --   duplikatu (razem 4 testy) [2 pkt]:
 --Rozwiązanie:
-CREATE TRIGGER insert_lekarz ON Lekarz 
-AFTER INSERT AS 
- DECLARE @imie VARCHAR(20) 
- DECLARE @nazwisko VARCHAR(31) 
- DECLARE @staz int
- SELECT @imie=imie, @nazwisko=nazwisko FROM inserted; 
- IF (SELECT COUNT(*) FROM Lekarz WHERE @imie=imie AND @nazwisko=nazwisko)>1 
- BEGIN 
- RAISERROR('Nie można dodać dwóch takim samych lekarzy!',1,2) 
- ROLLBACK 
- END 
+--SPRAWDZANIE DO 1 TRIGGERA/////////////////////////////
+SET IDENTITY_INSERT [dbo].[ksiazka] ON
+insert into ksiazka(id_ksiazka,tytul,rok,strony,id_au) values(4,'Pan Tadeusz','1901', '186',2); 
+insert into ksiazka(id_ksiazka,tytul,rok,strony,id_au) values(5,'Ogniem i Mieczem','2007', '540',1);
+SET IDENTITY_INSERT [dbo].[ksiazka] OFF
+--SPRAWDZENIE DO 2 TRIGGERA////////////////////////////
+UPDATE ksiazka SET tytul='Pan Tadeusz', rok='1901' WHERE id_ksiazka=2
+UPDATE ksiazka SET tytul='Bitwa Warszawska', rok='2004' WHERE id_ksiazka=1
+--//////////////////////////////////////////////////////////
+--B3 [6 pkt]
+--1) Napisz procedurę o nazwie "usun_funkcje", która usunie wszystkie funkcje, które
+--   zostały utworzone przez użytkowników w bieżącej bazie danych [4 pkt].
+--   Wskazówka: skorzystaj z dynamicznego SQLa.
+CREATE PROCEDURE usun_funkcje  
+AS BEGIN DECLARE @sql 
+NVARCHAR(50); 
+WHILE EXISTS(SELECT * FROM sys.objects where type = 'fn') 
+BEGIN SELECT @sql='DROP FUNCTION ' + name FROM sys.objects 
+WHERE TYPE = 'fn' 
+EXEC sp_executesql @sql 
+END 
+END 
+GO 
+EXEC usun_funkcje 
+select name from sys.objects where type = 'fn'
 
-SET IDENTITY_INSERT [dbo].[Lekarz] ON
-INSERT INTO Lekarz(id_lekarz,imie,nazwisko,staz,id_sz) VALUES (3,'Bogdan','Chmielnicki',320,1);
-INSERT INTO Lekarz(id_lekarz,imie,nazwisko,staz,id_sz) VALUES (4,'Ryszard','Lewiński',124,2);
-SET IDENTITY_INSERT [dbo].[Lekarz] OFF
-
-CREATE TRIGGER update_lekarz ON Lekarz 
-AFTER UPDATE AS 
- DECLARE @imie VARCHAR(15) 
- DECLARE @nazwisko VARCHAR(30) 
- DECLARE @staz INTEGER
- SELECT @imie=imie, @nazwisko=nazwisko FROM inserted; 
- IF (SELECT COUNT(*) FROM Lekarz WHERE @imie=imie AND @nazwisko=nazwisko)>1 
- BEGIN 
- RAISERROR('Nie może być dwóch takich samych lekarzy!',1,2) 
- ROLLBACK 
- END 
- 
-UPDATE Lekarz SET imie='Bogdan', nazwisko='Chmielnicki' WHERE id_lekarz=1
-UPDATE Lekarz SET imie='Ryszard', nazwisko='Lewiński' WHERE id_lekarz=2
- 
---C3 [6 pkt]
---1) Napisz procedurę o nazwie "usun_wyzwalacze", która usunie wszystkie wyzwalacze, które
---  zostały utworzone przez użytkowników w bieżącej bazie danych [4 pkt].
---  Wskazówka: skorzystaj z dynamicznego SQLa.
---2) Napisz instrukcję uruchamiającą procedurę "usun_wyzwalacze" i udowodnij, że
---  wcześniej zdefiniowane wyzwalacze zostały usunięte (napisz odpowiedni SELECT) [2 pkt].
+drop procedure usun_funkcje
+--2) Utwórz dowolną funkcję o nazwie "fun_testowa" (nie ma znaczenia co ona robi).
+--   Napisz instrukcję uruchamiającą procedurę "usun_funkcje" i udowodnij, że
+--   została ona usunięta (napisz odpowiedni SELECT) [2 pkt].
 --Rozwiązanie:
-CREATE PROCEDURE usun_wywzalacze AS
-BEGIN
-DECLARE @wyzywalacze varchar(100)
-DECLARE kursor cursor 
-for select [name] from sys.objects where type = 'tr'
-open kursor
-fetch next from kursor into @wyzwalacze
-while @@fetch_status = 0
-begin
-    exec('drop trigger ' + @wyzwalacze)
-    fetch next from kursor into @wyzwalacze
-end
-close kursor
-deallocate kursor
-end
-exec usun_wyzwalacze
-select [name] from sys.objects where type = 'tr'
