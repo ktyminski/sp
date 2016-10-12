@@ -1,0 +1,14 @@
+# Secret
+/getwd() setwd()
+dane <- read.table("ocoby.csv",header="TRUE", sep =",")
+////
+dane[c('imie')]
+////
+dane[dane$plec=='k',]
+/////
+dane[dane$plec=='m' & dane$wiek>'50',]
+////
+dane2<- dane[dane$plec=='m' & dane$wiek>'50',]
+write.csv(dane2, file="osoby2.csv", row.names=FALSE, quote=FALSE)
+///////////////////zad2
+dane$wyplata  <- round(runif(7,2000,5000),digits=2)
