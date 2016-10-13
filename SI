@@ -10,5 +10,38 @@ dane[dane$plec=='m' & dane$wiek>'50',]
 ////
 dane2<- dane[dane$plec=='m' & dane$wiek>'50',]
 write.csv(dane2, file="osoby2.csv", row.names=FALSE, quote=FALSE)
-///////////////////zad2
+////////222222222222222222222///////////zad2
 dane$wyplata  <- round(runif(7,2000,5000),digits=2)
+
+
+
+
+////
+row1 = data.frame("Jan", "Kowalski", "m", 30, round(runif(1,2000,5000),digits=2))
+names(wiersz) <- names(dane)
+dane = rbind(dane,row1)
+//////
+srednia = mean(dane$wyplata)
+min = min(dane$wyplata)
+max = max(dane$wyplata)
+deviation = sd(dane$wyplata)
+/////
+summary(dane)
+/////
+stand <- function(x) { (x - srednia) / deviation }
+standd = stand(dane$wyplata)
+dane[["Standarize"]] = standd
+
+norm <- function(x) { (x - min) / (min - max) }
+normm= norm(dane$wyplata)
+dane[["Normalize"]] = normm
+
+/////33333333333333333333333333/////
+stand <- function(x,npar=TRUE,print=TRUE){
++ stand1 < (x-mean(x))/sd(x)
++ return(stand1)}
+> y <- stand(dane$wyplata)
+> y
+
+
+
