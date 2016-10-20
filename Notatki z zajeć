@@ -1,6 +1,6 @@
 //
-###install.packages('genalg')
-###library('genalg')
+install.packages('genalg')
+library('genalg')
 
 mac <- read.csv("macierz.csv", head = FALSE, sep = ",")
 
@@ -12,12 +12,11 @@ fitnessFunc <- function(x)
     {
         if (x[i] == 0 && x[i+1] == 1)
         {
-          
+          pkt[1] <- pkt[1] + 1
             if(mac[pkt[2], pkt[1]] == '#')
             {
+                pkt[1] <- pkt[1] - 1
                 break
-            }else{
-            pkt[1] <- pkt[1] + 1
             }
             if(mac[pkt[2], pkt[1]] == 'X')
                 break    
@@ -64,6 +63,22 @@ fitnessFunc <- function(x)
     return (sqrt((pkt[2]-7)^2+(pkt[1]-10)^2))
 }
 
-GAmodel <- rbga.bin(size = 40, popSize = 500, iters = 300, mutationChance = 0.1, elitism = T, evalFunc = fitnessFunc)
+GAmodel <- rbga.bin(size = 40, popSize = 300, iters = 300, mutationChance = 0.1, elitism = T, evalFunc = fitnessFunc)
 summary(GAmodel, echo=TRUE)
+
+
+
+
+
+iter<-100
+animate_plot <- function() {
+for (i in seq(1, iter)) {
+temp <- data.frame(Iteracja = c(seq(1, i), seq(1, i)), Legenda = c(rep("Średnia", i),
+rep("Najlepsza", i)), WartoscFitness = c(GAmodel$mean[1:i], GAmodel$best[1:i]))
+pl <- ggplot(temp, aes(x = Iteracja, y = WartoscFitness, group = Legenda,
+colour = Legenda)) + geom_line() + scale_x_continuous(limits = c(0, iter))
+print(pl)
+}
+}
+animate_plot()
 
